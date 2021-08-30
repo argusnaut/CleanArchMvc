@@ -11,7 +11,7 @@ namespace CleanArchMvc.Domain.Tests
 		public void CreateCategory_WithValidParameters_ResultObjectValidState()
 		{
 			Action action = () => new Category(1, "Category Name");
-			action.Should().NotThrow<CleanArchMvc.Domain.Validation.DomainExceptionValidation>();
+			action.Should().NotThrow<Validation.DomainExceptionValidation>();
 
 		}
 
@@ -19,7 +19,7 @@ namespace CleanArchMvc.Domain.Tests
 		public void CreateCategory_NegativeIdValue_DomainExceptionValidation()
 		{
 			Action action = () => new Category(-1, "Category Name");
-			action.Should().Throw<CleanArchMvc.Domain.Validation.DomainExceptionValidation>().WithMessage("Invalid Id value");
+			action.Should().Throw<Validation.DomainExceptionValidation>().WithMessage("Invalid Id value");
 
 		}
 
@@ -27,7 +27,7 @@ namespace CleanArchMvc.Domain.Tests
 		public void CreateCategory_WithShortNameValue_DomainExceptionShortName()
 		{
 			Action action = () => new Category(1, "Ca");
-			action.Should().Throw<CleanArchMvc.Domain.Validation.DomainExceptionValidation>().WithMessage("Invalid name. Too short, minimum 3 characters");
+			action.Should().Throw<Validation.DomainExceptionValidation>().WithMessage("Invalid name. Too short, minimum 3 characters");
 
 		}
 
@@ -35,7 +35,7 @@ namespace CleanArchMvc.Domain.Tests
 		public void CreateCategory_MissingNameValue_DomainExceptionRequiredName()
 		{
 			Action action = () => new Category(1, "");
-			action.Should().Throw<CleanArchMvc.Domain.Validation.DomainExceptionValidation>().WithMessage("Invalid name. Name is required");
+			action.Should().Throw<Validation.DomainExceptionValidation>().WithMessage("Invalid name. Name is required");
 
 		}
 
@@ -43,7 +43,7 @@ namespace CleanArchMvc.Domain.Tests
 		public void CreateCategory_WithNullNameValue_DomainExceptionInvalidName()
 		{
 			Action action = () => new Category(1, null);
-			action.Should().Throw<CleanArchMvc.Domain.Validation.DomainExceptionValidation>();
+			action.Should().Throw<Validation.DomainExceptionValidation>();
 
 		}
 	}
