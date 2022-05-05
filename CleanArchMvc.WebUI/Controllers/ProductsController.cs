@@ -1,15 +1,20 @@
 ﻿using CleanArchMvc.Application.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 using System.Threading.Tasks;
+using CleanArchMvc.Application.DTOs;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
 	public class ProductsController : Controller
 	{
 		private readonly IProductService _productService;
-		public ProductsController(IProductService productService)
+		private readonly ICategoryService _categoryService;
+		public ProductsController(IProductService productService, ICategoryService categoryService)
 		{
 			_productService = productService;
+			_categoryService = categoryService;
 		}
 
 		[HttpGet]
@@ -17,6 +22,26 @@ namespace CleanArchMvc.WebUI.Controllers
 		{
 			var products = await _productService.GetProducts();
 			return View(products);
+		}
+
+		[HttpGet]
+		public async Task<IActionResult> Create()
+		{
+			ViewBag.CategoryId = new SelectList(await _categoryService.GetCategories(), "Id", "Name");
+			
+			return View();
+		}
+
+		[HttpPost]
+		public async Task<IActionResult> Create(ProductDTO productDto)
+		{
+			if (ModelState.IsValid)
+			{
+				await _productService.Add(productDto);
+				return RedirectToAction(nameof(Index));
+			}
+
+			return View(productDto);
 		}
 	}
 }
