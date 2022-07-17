@@ -1,12 +1,11 @@
-﻿using CleanArchMvc.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
-using CleanArchMvc.Application.DTOs;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.AspNetCore.Hosting;
-using System.IO;
+﻿using CleanArchMvc.Application.DTOs;
+using CleanArchMvc.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
+using System.IO;
+using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
