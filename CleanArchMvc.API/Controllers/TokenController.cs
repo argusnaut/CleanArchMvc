@@ -23,6 +23,26 @@ namespace CleanArchMvc.API.Controllers
             _authentication = authentication ?? throw new ArgumentNullException(nameof(authentication));
             _configuration = configuration;
         }
+        
+        // Test method, implemented but unused
+        [HttpPost("CreateUser")]
+        [ApiExplorerSettings(IgnoreApi = true)]
+        public async Task<ActionResult> CreateUser([FromBody] LoginModel userInfo)
+        {
+            var result = await _authentication.RegisterUser(userInfo.Email, userInfo.Password);
+
+            if (result)
+            {
+                return Ok($"User {userInfo.Email} was created successfully");
+            }
+            else
+            {
+                {
+                    ModelState.AddModelError(string.Empty, "User creation attempt failed.");
+                    return BadRequest(ModelState);
+                }
+            }
+        }
 
         [HttpPost("LoginUser")]
         public async Task<ActionResult<UserToken>> Login([FromBody] LoginModel userInfo)
@@ -32,7 +52,6 @@ namespace CleanArchMvc.API.Controllers
             if (result)
             {
                 return GenerateToken(userInfo);
-                //return Ok($"User {userInfo.Email} login successfully");
             }
             else
             {
