@@ -1,12 +1,12 @@
-﻿using AutoMapper;
+﻿using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
 using CleanArchMvc.Application.Products.Commands;
 using CleanArchMvc.Application.Products.Queries;
 using MediatR;
-using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.Services
 {
@@ -14,11 +14,11 @@ namespace CleanArchMvc.Application.Services
     {
         private readonly IMapper _mapper;
         private readonly IMediator _mediator;
+
         public ProductService(IMapper mapper, IMediator mediator)
         {
             _mapper = mapper;
             _mediator = mediator;
-
         }
 
         public async Task<IEnumerable<ProductDTO>> GetProducts()
@@ -26,7 +26,7 @@ namespace CleanArchMvc.Application.Services
             var productsQuery = new GetProductsQuery();
 
             if (productsQuery == null)
-                throw new Exception($"Entity could not be loaded.");
+                throw new Exception("Entity could not be loaded.");
 
             var result = await _mediator.Send(productsQuery);
 
@@ -38,7 +38,7 @@ namespace CleanArchMvc.Application.Services
             var productByIdQuery = new GetProductByIdQuery(id.Value);
 
             if (productByIdQuery == null)
-                throw new Exception($"Entity could not be loaded.");
+                throw new Exception("Entity could not be loaded.");
 
             var result = await _mediator.Send(productByIdQuery);
 
@@ -74,7 +74,7 @@ namespace CleanArchMvc.Application.Services
             var productRemoveCommand = new ProductRemoveCommand(id.Value);
 
             if (productRemoveCommand == null)
-                throw new Exception($"Entity could not be loaded.");
+                throw new Exception("Entity could not be loaded.");
 
             await _mediator.Send(productRemoveCommand);
         }

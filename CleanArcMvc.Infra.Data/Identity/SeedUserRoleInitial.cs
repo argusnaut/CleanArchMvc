@@ -1,13 +1,13 @@
-﻿using CleanArchMvc.Domain.Account;
+﻿using System;
+using CleanArchMvc.Domain.Account;
 using Microsoft.AspNetCore.Identity;
-using System;
 
 namespace CleanArchMvc.Infra.Data.Identity
 {
     public class SeedUserRoleInitial : ISeedUserRoleInitial
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<ApplicationUser> _userManager;
 
         public SeedUserRoleInitial(UserManager<ApplicationUser> userManager, RoleManager<IdentityRole> roleManager)
         {
@@ -30,12 +30,9 @@ namespace CleanArchMvc.Infra.Data.Identity
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
 
-                IdentityResult result = _userManager.CreateAsync(user, "Numsey#2022").Result;
+                var result = _userManager.CreateAsync(user, "Numsey#2022").Result;
 
-                if (result.Succeeded)
-                {
-                    _userManager.AddToRoleAsync(user, "User").Wait();
-                }
+                if (result.Succeeded) _userManager.AddToRoleAsync(user, "User").Wait();
             }
 
             if (_userManager.FindByEmailAsync("admin@localhost").Result == null)
@@ -51,12 +48,9 @@ namespace CleanArchMvc.Infra.Data.Identity
                     SecurityStamp = Guid.NewGuid().ToString()
                 };
 
-                IdentityResult result = _userManager.CreateAsync(user, "Numsey#2022").Result;
+                var result = _userManager.CreateAsync(user, "Numsey#2022").Result;
 
-                if (result.Succeeded)
-                {
-                    _userManager.AddToRoleAsync(user, "Admin").Wait();
-                }
+                if (result.Succeeded) _userManager.AddToRoleAsync(user, "Admin").Wait();
             }
         }
 
@@ -70,7 +64,7 @@ namespace CleanArchMvc.Infra.Data.Identity
                     NormalizedName = "USER"
                 };
 
-                IdentityResult roleResult = _roleManager.CreateAsync(role).Result;
+                var roleResult = _roleManager.CreateAsync(role).Result;
             }
 
             if (!_roleManager.RoleExistsAsync("Admin").Result)
@@ -81,7 +75,7 @@ namespace CleanArchMvc.Infra.Data.Identity
                     NormalizedName = "ADMIN"
                 };
 
-                IdentityResult roleResult = _roleManager.CreateAsync(role).Result;
+                var roleResult = _roleManager.CreateAsync(role).Result;
             }
         }
     }

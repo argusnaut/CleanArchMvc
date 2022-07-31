@@ -4,12 +4,6 @@ namespace CleanArchMvc.Domain.Entities
 {
     public sealed class Product : Entity
     {
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public decimal Price { get; private set; }
-        public int Stock { get; private set; }
-        public string Image { get; private set; }
-
         public Product(string name, string description, decimal price, int stock, string image)
         {
             ValidateDomain(name, description, price, stock, image);
@@ -21,6 +15,15 @@ namespace CleanArchMvc.Domain.Entities
             Id = id;
             ValidateDomain(name, description, price, stock, image);
         }
+
+        public string Name { get; private set; }
+        public string Description { get; private set; }
+        public decimal Price { get; private set; }
+        public int Stock { get; private set; }
+        public string Image { get; private set; }
+
+        public int CategoryId { get; set; }
+        public Category Category { get; set; }
 
         public void Update(string name, string description, decimal price, int stock, string image, int categoryId)
         {
@@ -34,7 +37,8 @@ namespace CleanArchMvc.Domain.Entities
             DomainExceptionValidation.When(name.Length < 3, "Invalid name. Too short, minimum 3 characters");
 
             DomainExceptionValidation.When(string.IsNullOrEmpty(description), "Invalid description. Name is required");
-            DomainExceptionValidation.When(description.Length < 5, "Invalid description. Too short, minimum 3 characters");
+            DomainExceptionValidation.When(description.Length < 5,
+                "Invalid description. Too short, minimum 3 characters");
 
             DomainExceptionValidation.When(price < 0, "Invalid price value");
 
@@ -48,8 +52,5 @@ namespace CleanArchMvc.Domain.Entities
             Stock = stock;
             Image = image;
         }
-
-        public int CategoryId { get; set; }
-        public Category Category { get; set; }
     }
 }

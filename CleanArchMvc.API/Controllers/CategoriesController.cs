@@ -1,16 +1,19 @@
-﻿using CleanArchMvc.Application.DTOs;
-using CleanArchMvc.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CleanArchMvc.Application.DTOs;
+using CleanArchMvc.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class CategoriesController : ControllerBase
     {
         private readonly ICategoryService _categoryService;
+
         public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
@@ -21,10 +24,7 @@ namespace CleanArchMvc.API.Controllers
         {
             var categories = await _categoryService.GetCategories();
 
-            if (categories == null)
-            {
-                return NotFound("Categories not found");
-            }
+            if (categories == null) return NotFound("Categories not found");
 
             return Ok(categories);
         }
@@ -34,10 +34,7 @@ namespace CleanArchMvc.API.Controllers
         {
             var category = await _categoryService.GetById(id);
 
-            if (category == null)
-            {
-                return NotFound("Category not found");
-            }
+            if (category == null) return NotFound("Category not found");
 
             return Ok(category);
         }
@@ -45,10 +42,7 @@ namespace CleanArchMvc.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] CategoryDTO categoryDto)
         {
-            if (categoryDto == null)
-            {
-                return BadRequest("Invalid Data");
-            }
+            if (categoryDto == null) return BadRequest("Invalid Data");
 
             await _categoryService.Add(categoryDto);
 
@@ -58,15 +52,9 @@ namespace CleanArchMvc.API.Controllers
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] CategoryDTO categoryDto)
         {
-            if (id != categoryDto.Id)
-            {
-                return BadRequest();
-            }
+            if (id != categoryDto.Id) return BadRequest();
 
-            if (categoryDto == null)
-            {
-                return BadRequest();
-            }
+            if (categoryDto == null) return BadRequest();
 
             await _categoryService.Update(categoryDto);
 
@@ -78,10 +66,7 @@ namespace CleanArchMvc.API.Controllers
         {
             var category = await _categoryService.GetById(id);
 
-            if (category == null)
-            {
-                return NotFound("Category not found");
-            }
+            if (category == null) return NotFound("Category not found");
 
             await _categoryService.Remove(id);
 

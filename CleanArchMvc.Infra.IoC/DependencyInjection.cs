@@ -1,4 +1,5 @@
-﻿using CleanArchMvc.Application.Interfaces;
+﻿using System;
+using CleanArchMvc.Application.Interfaces;
 using CleanArchMvc.Application.Mappings;
 using CleanArchMvc.Application.Services;
 using CleanArchMvc.Domain.Account;
@@ -11,19 +12,20 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace CleanArchMvc.Infra.IoC
 {
     public static class DependencyInjection
     {
-        public static IServiceCollection AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
+        public static IServiceCollection AddInfrastructure(this IServiceCollection services,
+            IConfiguration configuration)
         {
             services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
-            b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                    b => b.MigrationsAssembly(typeof(ApplicationDbContext).Assembly.FullName)));
 
-            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>().AddDefaultTokenProviders();
+            services.AddIdentity<ApplicationUser, IdentityRole>().AddEntityFrameworkStores<ApplicationDbContext>()
+                .AddDefaultTokenProviders();
 
             services.ConfigureApplicationCookie(options => options.AccessDeniedPath = "/Account/Login");
 

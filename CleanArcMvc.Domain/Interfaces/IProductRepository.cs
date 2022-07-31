@@ -1,6 +1,6 @@
-﻿using CleanArchMvc.Domain.Entities;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CleanArchMvc.Domain.Entities;
 
 namespace CleanArchMvc.Domain.Interfaces
 {

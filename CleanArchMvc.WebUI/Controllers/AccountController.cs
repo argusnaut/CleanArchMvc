@@ -1,23 +1,35 @@
-﻿using CleanArchMvc.Domain.Account;
+﻿using System.Threading.Tasks;
+using CleanArchMvc.Domain.Account;
 using CleanArchMvc.WebUI.ViewModels;
 using Microsoft.AspNetCore.Mvc;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
     public class AccountController : Controller
     {
         private readonly IAuthenticate _authentication;
+
         public AccountController(IAuthenticate authentication)
         {
             _authentication = authentication;
         }
 
+        #region LOGOUT
+
+        public async Task<IActionResult> Logout()
+        {
+            await _authentication.Logout();
+            return Redirect("/Account/Login");
+        }
+
+        #endregion
+
         #region LOGIN
+
         [HttpGet]
         public IActionResult Login(string returnUrl)
         {
-            return View(new LoginViewModel()
+            return View(new LoginViewModel
             {
                 ReturnUrl = returnUrl
             });
@@ -30,21 +42,18 @@ namespace CleanArchMvc.WebUI.Controllers
 
             if (result)
             {
-                if (string.IsNullOrEmpty(model.ReturnUrl))
-                {
-                    return RedirectToAction("Index", "Home");
-                }
+                if (string.IsNullOrEmpty(model.ReturnUrl)) return RedirectToAction("Index", "Home");
                 return Redirect(model.ReturnUrl);
             }
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid login attempt. (Password must be strong)");
-                return View(model);
-            }
+
+            ModelState.AddModelError(string.Empty, "Invalid login attempt. (Password must be strong)");
+            return View(model);
         }
+
         #endregion
 
         #region REGISTER
+
         [HttpGet]
         public IActionResult Register()
         {
@@ -56,22 +65,12 @@ namespace CleanArchMvc.WebUI.Controllers
         {
             var result = await _authentication.RegisterUser(model.Email, model.Password);
 
-            if (result)
-                return Redirect("/");
-            else
-            {
-                ModelState.AddModelError(string.Empty, "Invalid register. (Password must be strong)");
-                return View(model);
-            }
-        }
-        #endregion
+            if (result) return Redirect("/");
 
-        #region LOGOUT
-        public async Task<IActionResult> Logout()
-        {
-            await _authentication.Logout();
-            return Redirect("/Account/Login");
+            ModelState.AddModelError(string.Empty, "Invalid register. (Password must be strong)");
+            return View(model);
         }
+
         #endregion
     }
 }

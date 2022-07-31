@@ -1,16 +1,19 @@
-﻿using CleanArchMvc.Application.DTOs;
-using CleanArchMvc.Application.Interfaces;
-using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CleanArchMvc.Application.DTOs;
+using CleanArchMvc.Application.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace CleanArchMvc.API.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class ProductsController : ControllerBase
     {
         private readonly IProductService _productService;
+
         public ProductsController(IProductService productService)
         {
             _productService = productService;
@@ -21,10 +24,7 @@ namespace CleanArchMvc.API.Controllers
         {
             var products = await _productService.GetProducts();
 
-            if (products == null)
-            {
-                return NotFound("Products not found");
-            }
+            if (products == null) return NotFound("Products not found");
 
             return Ok(products);
         }
@@ -34,10 +34,7 @@ namespace CleanArchMvc.API.Controllers
         {
             var product = await _productService.GetById(id);
 
-            if (product == null)
-            {
-                return NotFound("Product not found");
-            }
+            if (product == null) return NotFound("Product not found");
 
             return Ok(product);
         }
@@ -45,10 +42,7 @@ namespace CleanArchMvc.API.Controllers
         [HttpPost]
         public async Task<ActionResult> Post([FromBody] ProductDTO productDto)
         {
-            if (productDto == null)
-            {
-                return BadRequest("Invalid Data");
-            }
+            if (productDto == null) return BadRequest("Invalid Data");
 
             await _productService.Add(productDto);
 
@@ -58,15 +52,9 @@ namespace CleanArchMvc.API.Controllers
         [HttpPut]
         public async Task<ActionResult> Put(int id, [FromBody] ProductDTO productDto)
         {
-            if (id != productDto.Id)
-            {
-                return BadRequest();
-            }
+            if (id != productDto.Id) return BadRequest();
 
-            if (productDto == null)
-            {
-                return BadRequest();
-            }
+            if (productDto == null) return BadRequest();
 
             await _productService.Update(productDto);
 
@@ -78,10 +66,7 @@ namespace CleanArchMvc.API.Controllers
         {
             var product = await _productService.GetById(id);
 
-            if (product == null)
-            {
-                return NotFound("Product not found");
-            }
+            if (product == null) return NotFound("Product not found");
 
             await _productService.Remove(id);
 

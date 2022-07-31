@@ -15,7 +15,7 @@ namespace CleanArchMvc.Infra.Data.EntitiesConfiguration
                 new Category(1, "Material Escolar"),
                 new Category(2, "Eletrônicos"),
                 new Category(3, "Acessórios")
-                );
+            );
         }
     }
 }

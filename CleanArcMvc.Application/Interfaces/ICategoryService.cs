@@ -1,6 +1,6 @@
-﻿using CleanArchMvc.Application.DTOs;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using CleanArchMvc.Application.DTOs;
 
 namespace CleanArchMvc.Application.Interfaces
 {

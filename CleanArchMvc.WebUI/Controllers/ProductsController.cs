@@ -1,21 +1,22 @@
-﻿using CleanArchMvc.Application.DTOs;
+﻿using System.IO;
+using System.Threading.Tasks;
+using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using System.IO;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
     public class ProductsController : Controller
     {
-        private readonly IProductService _productService;
         private readonly ICategoryService _categoryService;
         private readonly IWebHostEnvironment _environment;
+        private readonly IProductService _productService;
 
-        public ProductsController(IProductService productService, ICategoryService categoryService, IWebHostEnvironment environment)
+        public ProductsController(IProductService productService, ICategoryService categoryService,
+            IWebHostEnvironment environment)
         {
             _productService = productService;
             _categoryService = categoryService;
@@ -71,6 +72,7 @@ namespace CleanArchMvc.WebUI.Controllers
                 await _productService.Update(productDto);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(productDto);
         }
 
@@ -87,7 +89,8 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(productDto);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _productService.Remove(id);

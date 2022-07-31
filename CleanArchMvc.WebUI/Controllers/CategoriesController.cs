@@ -1,9 +1,8 @@
-﻿using CleanArchMvc.Application.DTOs;
+﻿using System.Threading.Tasks;
+using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.WebUI.Controllers
 {
@@ -11,6 +10,7 @@ namespace CleanArchMvc.WebUI.Controllers
     public class CategoriesController : Controller
     {
         private readonly ICategoryService _categoryService;
+
         public CategoriesController(ICategoryService categoryService)
         {
             _categoryService = categoryService;
@@ -58,16 +58,10 @@ namespace CleanArchMvc.WebUI.Controllers
         {
             if (ModelState.IsValid)
             {
-                try
-                {
-                    await _categoryService.Update(categoryDto);
-                }
-                catch (Exception)
-                {
-                    throw;
-                }
+                await _categoryService.Update(categoryDto);
                 return RedirectToAction(nameof(Index));
             }
+
             return View(categoryDto);
         }
 
@@ -83,7 +77,8 @@ namespace CleanArchMvc.WebUI.Controllers
             return View(categoryDto);
         }
 
-        [HttpPost, ActionName("Delete")]
+        [HttpPost]
+        [ActionName("Delete")]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
             await _categoryService.Remove(id);

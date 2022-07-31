@@ -1,21 +1,24 @@
-﻿using CleanArchMvc.Domain.Account;
+﻿using System.Threading.Tasks;
+using CleanArchMvc.Domain.Account;
 using Microsoft.AspNetCore.Identity;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.Infra.Data.Identity
 {
     public class AuthenticateService : IAuthenticate
     {
-        private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
-        public AuthenticateService(UserManager<ApplicationUser> userManager, SignInManager<ApplicationUser> signInManager)
+        private readonly UserManager<ApplicationUser> _userManager;
+
+        public AuthenticateService(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager)
         {
             _userManager = userManager;
             _signInManager = signInManager;
         }
+
         public async Task<bool> Authenticate(string email, string password)
         {
-            var result = await _signInManager.PasswordSignInAsync(email, password, false, lockoutOnFailure: false);
+            var result = await _signInManager.PasswordSignInAsync(email, password, false, false);
 
             return result.Succeeded;
         }
@@ -30,10 +33,7 @@ namespace CleanArchMvc.Infra.Data.Identity
 
             var result = await _userManager.CreateAsync(applicationUser, password);
 
-            if (result.Succeeded)
-            {
-                await _signInManager.SignInAsync(applicationUser, isPersistent: false);
-            }
+            if (result.Succeeded) await _signInManager.SignInAsync(applicationUser, false);
 
             return result.Succeeded;
         }

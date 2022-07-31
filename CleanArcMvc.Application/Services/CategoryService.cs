@@ -1,17 +1,18 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
+using AutoMapper;
 using CleanArchMvc.Application.DTOs;
 using CleanArchMvc.Application.Interfaces;
 using CleanArchMvc.Domain.Entities;
 using CleanArchMvc.Domain.Interfaces;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace CleanArchMvc.Application.Services
 {
     public class CategoryService : ICategoryService
     {
-        private ICategoryRepository _categoryRepository;
         private readonly IMapper _mapper;
+        private readonly ICategoryRepository _categoryRepository;
+
         public CategoryService(ICategoryRepository categoryRepository, IMapper mapper)
         {
             _categoryRepository = categoryRepository;
