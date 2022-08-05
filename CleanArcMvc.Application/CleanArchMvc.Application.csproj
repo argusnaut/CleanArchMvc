@@ -1,16 +1,16 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper" Version="11.0.1"/>
-        <PackageReference Include="MediatR" Version="10.0.1"/>
+        <PackageReference Include="AutoMapper" Version="11.0.1" />
+        <PackageReference Include="MediatR" Version="10.0.1" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CleanArcMvc.Domain\CleanArchMvc.Domain.csproj"/>
+        <ProjectReference Include="..\CleanArcMvc.Domain\CleanArchMvc.Domain.csproj" />
     </ItemGroup>
 
 </Project>

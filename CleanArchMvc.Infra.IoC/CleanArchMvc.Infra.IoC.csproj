@@ -1,22 +1,22 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
     </PropertyGroup>
 
     <ItemGroup>
-        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0"/>
-        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1"/>
-        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.17"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0"/>
-        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0"/>
+        <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="11.0.0" />
+        <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="6.0.7" />
+        <PackageReference Include="Swashbuckle.AspNetCore.Swagger" Version="6.4.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerGen" Version="6.4.0" />
+        <PackageReference Include="Swashbuckle.AspNetCore.SwaggerUI" Version="6.4.0" />
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\CleanArcMvc.Application\CleanArchMvc.Application.csproj"/>
-        <ProjectReference Include="..\CleanArcMvc.Domain\CleanArchMvc.Domain.csproj"/>
-        <ProjectReference Include="..\CleanArcMvc.Infra.Data\CleanArchMvc.Infra.Data.csproj"/>
+        <ProjectReference Include="..\CleanArcMvc.Application\CleanArchMvc.Application.csproj" />
+        <ProjectReference Include="..\CleanArcMvc.Domain\CleanArchMvc.Domain.csproj" />
+        <ProjectReference Include="..\CleanArcMvc.Infra.Data\CleanArchMvc.Infra.Data.csproj" />
     </ItemGroup>
 
 </Project>
