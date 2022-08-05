@@ -2,21 +2,16 @@
 
     <PropertyGroup>
         <TargetFramework>net6.0</TargetFramework>
-        <CopyRefAssembliesToPublishDirectory>false</CopyRefAssembliesToPublishDirectory>
+        <Nullable>enable</Nullable>
+        <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
-
-    <ItemGroup>
-        <PackageReference Include="Microsoft.AspNetCore.Mvc.Razor.RuntimeCompilation" Version="6.0.7" />
-    </ItemGroup>
 
     <ItemGroup>
         <ProjectReference Include="..\CleanArchMvc.Infra.IoC\CleanArchMvc.Infra.IoC.csproj" />
     </ItemGroup>
 
-    <ProjectExtensions>
-        <VisualStudio>
-            <UserProperties appsettings_1json__JsonSchema="" />
-        </VisualStudio>
-    </ProjectExtensions>
+    <ItemGroup>
+      <Folder Include="wwwroot\images" />
+    </ItemGroup>
 
 </Project>
